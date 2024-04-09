@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito di Test</title>
+</head>
+<body>
+    <h1>Benvenuto sul nostro sito</h1>
+
+    <script>
+        // Raccolta dell'indirizzo IP
+        var ipAddress = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
+        console.log("Indirizzo IP:", ipAddress);
+
+        // Raccolta dei cookie
+        var cookies = document.cookie;
+        console.log("Cookie:", cookies);
+
+        // Raccolta delle informazioni sul browser
+        var browserInfo = navigator.userAgent;
+        console.log("Informazioni sul browser:", browserInfo);
+
+        // Raccolta delle informazioni sul dispositivo
+        var deviceInfo = navigator.userAgent;
+        console.log("Informazioni sul dispositivo:", deviceInfo);
+
+        // Raccolta della posizione geografica (richiede il consenso dell'utente)
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            console.log("Posizione geografica:", latitude, longitude);
+        });
+
+        // Raccolta dell'attività di navigazione (ad esempio, URL visitate)
+        var navigationActivity = window.location.href;
+        console.log("Attività di navigazione:", navigationActivity);
+
+        var data = {
+            ipAddress: "<?php echo $_SERVER['REMOTE_ADDR']; ?>",
+            cookies: document.cookie,
+            browserInfo: navigator.userAgent,
+            deviceInfo: navigator.userAgent,
+            navigationActivity: window.location.href
+        };
+
+        // Invio dei dati al server
+        fetch('/save-data.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            console.log('Dati inviati correttamente al server');
+        })
+        .catch(error => {
+            console.error('Errore durante l\'invio dei dati al server:', error);
+        });
+
+
+    </script>
+</body>
+</html>
